@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Extensions;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using NLog;
 
 namespace Common
 {
@@ -20,6 +22,7 @@ namespace Common
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -29,6 +32,7 @@ namespace Common
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureCors();
+            services.ConfigureLoggerService();
             
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Common", Version = "v1"}); });
