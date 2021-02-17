@@ -1,4 +1,7 @@
+using Entities;
 using LoggerService;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Common.Extensions
@@ -18,6 +21,10 @@ namespace Common.Extensions
         
         public static void ConfigureLoggerService(this IServiceCollection services) =>
             services.AddScoped<ILoggerManager, LoggerManager>();
+
+        public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddDbContext<RepositoryContext>(options =>
+                options.UseNpgsql(configuration.GetConnectionString("PostgreSqlConnection")));
 
     }
 }

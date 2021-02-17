@@ -33,6 +33,7 @@ namespace Common
         {
             services.ConfigureCors();
             services.ConfigureLoggerService();
+            services.ConfigureDbContext(Configuration);
             
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Common", Version = "v1"}); });
