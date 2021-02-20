@@ -24,7 +24,7 @@ namespace Common.Extensions
 
         public static void ConfigureDbContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("PostgreSqlConnection")));
-
+                options.UseNpgsql(configuration.GetConnectionString("PostgreSqlConnection"), 
+                    opt => opt.MigrationsAssembly("Common")));
     }
 }
