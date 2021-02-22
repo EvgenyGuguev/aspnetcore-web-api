@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using Contracts;
+using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Common.Controllers
@@ -23,7 +25,13 @@ namespace Common.Controllers
             try
             {
                 var companies = _repository.Company.GetAllCompanies(false);
-                return Ok(companies);
+                var companiesDto = companies.Select(c => new CompanyDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    FullAddress = $"{c.Address} {c.Country}"
+                }).ToList();
+                return Ok(companiesDto);
             }
             catch (Exception e)
             {
