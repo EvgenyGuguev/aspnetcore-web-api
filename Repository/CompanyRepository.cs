@@ -1,0 +1,16 @@
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+using Contracts;
+using Entities;
+using Entities.Models;
+
+namespace Repository
+{
+    public class CompanyRepository : RepositoryBase<Company>, ICompanyRepository
+    {
+        public CompanyRepository(RepositoryContext repositoryContext) : base(repositoryContext)
+        {
+        }
+    }
+}
