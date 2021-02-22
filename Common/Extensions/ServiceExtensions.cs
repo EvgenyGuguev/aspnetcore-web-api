@@ -1,8 +1,10 @@
+using Contracts;
 using Entities;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Repository;
 
 namespace Common.Extensions
 {
@@ -26,5 +28,8 @@ namespace Common.Extensions
             services.AddDbContext<RepositoryContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("PostgreSqlConnection"), 
                     opt => opt.MigrationsAssembly("Common")));
+
+        public static void ConfigureRepositoryManager(this IServiceCollection service) =>
+            service.AddScoped<IRepositoryManager, RepositoryManager>();
     }
 }

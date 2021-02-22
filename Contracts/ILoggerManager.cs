@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace LoggerService
+﻿namespace Contracts
 {
     public interface ILoggerManager
     {
