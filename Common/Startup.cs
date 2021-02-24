@@ -38,7 +38,12 @@ namespace Common
             services.ConfigureRepositoryManager();
             services.AddAutoMapper(typeof(Startup));
             
-            services.AddControllers();
+            services.AddControllers(config =>
+            {
+                config.RespectBrowserAcceptHeader = true;
+                config.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters();
+            
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Common", Version = "v1"}); });
         }
 
