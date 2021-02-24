@@ -24,7 +24,7 @@ namespace Common.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}", Name = "CompanyById")]
+        [HttpGet]
         public IActionResult GetCompanies()
         {
             var companies = _repository.Company.GetAllCompanies(false);
@@ -32,7 +32,7 @@ namespace Common.Controllers
             return Ok(companiesDto);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "CompanyById")]
         public IActionResult GetCompany(Guid id)
         {
             var company = _repository.Company.GetCompany(id, false);
