@@ -31,5 +31,10 @@ namespace Common.Extensions
 
         public static void ConfigureRepositoryManager(this IServiceCollection service) =>
             service.AddScoped<IRepositoryManager, RepositoryManager>();
+        
+        public static IMvcBuilder AddCustomCsvFormatter(this IMvcBuilder builder) =>
+            builder.AddMvcOptions(config => config.OutputFormatters.Add(new
+                CsvOutputFormatter()));
+
     }
 }
