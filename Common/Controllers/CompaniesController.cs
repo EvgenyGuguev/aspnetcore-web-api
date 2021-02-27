@@ -57,6 +57,12 @@ namespace Common.Controllers
                 _logger.LogError("CompanyForCreationDto object sent from client is null.");
                 return BadRequest("CompanyForCreationDto object is null");
             }
+            
+            if(!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the CompanyForCreationDto object");
+                return UnprocessableEntity(ModelState);
+            }
 
             var companyEntity = _mapper.Map<Company>(company);
             
