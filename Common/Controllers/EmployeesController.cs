@@ -184,11 +184,19 @@ namespace Common.Controllers
                 return NotFound();
             }
 
-            var employeePatch = _mapper.Map<EmployeeForUpdateDto>(employeeEntity);
+            var employeeToPatch = _mapper.Map<EmployeeForUpdateDto>(employeeEntity);
             
-            patchDoc.ApplyTo(employeePatch);
+            patchDoc.ApplyTo(employeeToPatch, ModelState);
+            
+            TryValidateModel(employeeToPatch);
 
-            _mapper.Map(employeePatch, employeeEntity);
+            if(!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the patch document");
+                return UnprocessableEntity(ModelState);
+            }
+            
+            _mapper.Map(employeeToPatch, employeeEntity);
             
             _repository.Save();
 
