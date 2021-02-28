@@ -29,26 +29,25 @@ namespace Common.Controllers
         [HttpGet]
         public async Task<IActionResult> GetEmployeesForCompany(Guid companyId)
         {
-            var company = _repository.Company.GetCompanyAsync(companyId, false);
+            var company = await _repository.Company.GetCompanyAsync(companyId, false);
             if (company == null)
             {
                 _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
                 return NotFound();
             }
-            else
-            {
-                var employeesFromDb = await _repository.Employee.GetEmployeesAsync(companyId, false);
-                var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
 
-                return Ok(employeesDto);
-            }
+            var employeesFromDb = await _repository.Employee.GetEmployeesAsync(companyId,  false);
+
+            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
+
+            return Ok(employeesDto);
         }
 
         [HttpGet("{id}", Name = "GetEmployeeForCompany")]
         public async Task<IActionResult> GetEmployeeForCompany(Guid companyId, Guid id)
         {
-            var company = _repository.Company.GetCompanyAsync(companyId, false);
-            if(company == null)
+            var company = await _repository.Company.GetCompanyAsync(companyId,  false);
+            if (company == null)
             {
                 _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database.");
                 return NotFound();
@@ -62,6 +61,7 @@ namespace Common.Controllers
             }
 
             var employee = _mapper.Map<EmployeeDto>(employeeDb);
+
             return Ok(employee);
         }
 
