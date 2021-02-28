@@ -37,7 +37,6 @@ namespace Common.ActionFilters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new System.NotImplementedException();
         }
     }
 }

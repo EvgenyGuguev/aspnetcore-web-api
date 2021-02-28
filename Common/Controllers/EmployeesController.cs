@@ -9,6 +9,7 @@ using Entities.Models;
 using Entities.RequestFeatures;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Common.Controllers
 {
@@ -28,7 +29,9 @@ namespace Common.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery] EmployeeParameters employeeParameters)
+        public async Task<IActionResult> GetEmployeesForCompany(
+            Guid companyId, [FromQuery] EmployeeParameters employeeParameters
+        )
         {
             var company = await _repository.Company.GetCompanyAsync(companyId, false);
             if (company == null)
@@ -39,6 +42,8 @@ namespace Common.Controllers
 
             var employeesFromDb = await _repository.Employee
                 .GetEmployeesAsync(companyId, employeeParameters,  false);
+            
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(employeesFromDb.MetaData));
 
             var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
 
