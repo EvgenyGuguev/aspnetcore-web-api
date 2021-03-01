@@ -33,6 +33,10 @@ namespace Common.Controllers
             Guid companyId, [FromQuery] EmployeeParameters employeeParameters
         )
         {
+            if(!employeeParameters.ValidAgeRange)
+                return BadRequest("Max age can't be less than min age.");
+
+            
             var company = await _repository.Company.GetCompanyAsync(companyId, false);
             if (company == null)
             {
