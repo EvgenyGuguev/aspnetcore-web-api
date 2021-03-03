@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.ActionFilters;
+using Common.Utility;
 using Contracts;
 using Entities.DataTransferObjects;
 using Entities.Models;
@@ -21,17 +22,20 @@ namespace Common.Controllers
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly IDataShaper<EmployeeDto> _dataShaper;
+        private readonly EmployeeLinks _employeeLinks;
 
         public EmployeesController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, 
-            IDataShaper<EmployeeDto> dataShaper)
+            IDataShaper<EmployeeDto> dataShaper, EmployeeLinks employeeLinks)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
             _dataShaper = dataShaper;
+            _employeeLinks = employeeLinks;
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
         public async Task<IActionResult> GetEmployeesForCompany(
             Guid companyId, [FromQuery] EmployeeParameters employeeParameters
         )
@@ -54,7 +58,10 @@ namespace Common.Controllers
 
             var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
 
-            return Ok(_dataShaper.ShapeData(employeesDto, employeeParameters.Fields));
+            var links = _employeeLinks.TryGenerateLinks(employeesDto,
+                employeeParameters.Fields, companyId, HttpContext);
+            return links.HasLinks ? Ok(links.LinkedEntities) : Ok(links.ShapedEntities);
+
         }
 
         [HttpGet("{id}", Name = "GetEmployeeForCompany")]

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Common.ActionFilters;
 using Common.Extensions;
+using Common.Utility;
 using Contracts;
 using Entities.DataTransferObjects;
 using Microsoft.AspNetCore.Builder;
@@ -44,8 +45,10 @@ namespace Common
             services.AddScoped<ValidateCompanyExistsAttribute>();
             services.AddScoped<ValidateEmployeeForCompanyExistsAttribute>();
             services.AddScoped <IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
+            services.AddScoped<ValidateMediaTypeAttribute>();
+            services.AddScoped<EmployeeLinks>();
 
-
+            
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
             
             services.AddControllers(config =>
@@ -55,6 +58,9 @@ namespace Common
             }).AddNewtonsoftJson()
               .AddXmlDataContractSerializerFormatters()
               .AddCustomCsvFormatter();
+            
+            services.AddCustomMediaTypes();
+
             
             services.AddSwaggerGen(c =>
             {
