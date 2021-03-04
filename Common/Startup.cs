@@ -47,6 +47,7 @@ namespace Common
             services.AddScoped <IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
             services.AddScoped<ValidateMediaTypeAttribute>();
             services.AddScoped<EmployeeLinks>();
+            services.ConfigureVersioning();
 
             
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);

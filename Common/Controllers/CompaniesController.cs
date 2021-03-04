@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Common.Controllers
 {
+    [ApiVersion("1.0")]
     [ApiController]
     [Route("api/companies")]
     public class CompaniesController : ControllerBase

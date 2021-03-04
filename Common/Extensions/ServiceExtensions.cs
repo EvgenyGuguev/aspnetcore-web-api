@@ -58,5 +58,15 @@ namespace Common.Extensions
                 xmlOutputFormatter?.SupportedMediaTypes.Add("application/vnd.codemaze.apiroot+xml");
             });
         }
+
+        public static void ConfigureVersioning(this IServiceCollection service)
+        {
+            service.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+            });
+        }
     }
 }
