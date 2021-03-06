@@ -56,6 +56,9 @@ namespace Common
             services.AddMemoryCache();
             services.ConfigureRateLimitingOptions();
             services.AddHttpContextAccessor();
+
+            services.AddAuthentication();
+            services.ConfigureIdentity();
             
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
             
@@ -102,6 +105,7 @@ namespace Common
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
