@@ -15,6 +15,7 @@ namespace Common.Controllers
     [ApiVersion("1.0")]
     [ApiController]
     [Route("api/companies")]
+    [ResponseCache(CacheProfileName = "120SecondsDuration")]
     public class CompaniesController : ControllerBase
     {
         private readonly IRepositoryManager _repository;
@@ -37,6 +38,7 @@ namespace Common.Controllers
         }
 
         [HttpGet("{id}", Name = "CompanyById")]
+        [ResponseCache(Duration = 60)]
         public async Task<IActionResult> GetCompany(Guid id)
         {
             var company = await _repository.Company.GetCompanyAsync(id, false);

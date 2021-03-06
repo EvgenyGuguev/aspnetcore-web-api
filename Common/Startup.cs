@@ -48,6 +48,7 @@ namespace Common
             services.AddScoped<ValidateMediaTypeAttribute>();
             services.AddScoped<EmployeeLinks>();
             services.ConfigureVersioning();
+            services.ConfigureResponseCaching();
 
             
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
@@ -56,6 +57,7 @@ namespace Common
             {
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
+                config.CacheProfiles.Add("120SecondsDuration", new CacheProfile {Duration = 120});
             }).AddNewtonsoftJson()
               .AddXmlDataContractSerializerFormatters()
               .AddCustomCsvFormatter();
@@ -87,6 +89,7 @@ namespace Common
             app.UseHttpsRedirection();
 
             app.UseCors("CorsPolicy");
+            app.UseResponseCaching();
 
             app.UseRouting();
 

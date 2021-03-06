@@ -68,5 +68,7 @@ namespace Common.Extensions
                 opt.DefaultApiVersion = new ApiVersion(1, 0);
             });
         }
+
+        public static void ConfigureResponseCaching(this IServiceCollection service) => service.AddResponseCaching();
     }
 }
