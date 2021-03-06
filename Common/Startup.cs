@@ -49,6 +49,7 @@ namespace Common
             services.AddScoped<EmployeeLinks>();
             services.ConfigureVersioning();
             services.ConfigureResponseCaching();
+            services.ConfigureHttpCacheHeaders();
 
             
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
@@ -90,6 +91,7 @@ namespace Common
 
             app.UseCors("CorsPolicy");
             app.UseResponseCaching();
+            app.UseHttpCacheHeaders();
 
             app.UseRouting();
 
