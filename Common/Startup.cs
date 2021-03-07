@@ -60,6 +60,8 @@ namespace Common
             services.AddAuthentication();
             services.ConfigureIdentity();
             
+            services.ConfigureJWT(Configuration);
+            
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
             
             services.AddControllers(config =>
