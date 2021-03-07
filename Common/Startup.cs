@@ -77,11 +77,7 @@ namespace Common
             
             services.AddCustomMediaTypes();
 
-            
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Common", Version = "v1"});
-            });
+            services.ConfigureSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
