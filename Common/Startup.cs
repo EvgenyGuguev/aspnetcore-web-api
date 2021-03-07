@@ -24,7 +24,6 @@ using Repository.DataShaping;
 
 namespace Common
 {
-    // FOr test commit
     public class Startup
     {
         public Startup(IConfiguration configuration)
